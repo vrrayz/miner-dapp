@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import Nav from "./components/Nav";
 import WalletModal from "./components/WalletModal";
+import UserDetailsContainer from "./components/UserDetailsContainer";
 
 import { ethers } from "ethers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
@@ -78,50 +79,7 @@ function App() {
           connectDapp={connectDapp}
         />
       )}
-      <div className="container mt-5 px-3" style={{ height: "100px" }}>
-        <div className="row">
-          <div className="col-lg-3 col-md-6 mb-3">
-            <div className="card bg-primary text-light">
-              <div className="card-body text-center">
-                <h5 className="card-title">Current Deposit</h5>
-                <p className="card-text py-3">
-                  <span className="h4">10</span> BUSD
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-3 col-md-6 mb-3">
-            <div className="card bg-primary text-light">
-              <div className="card-body text-center">
-                <h5 className="card-title">Current Deposit</h5>
-                <p className="card-text py-3">
-                  <span className="h4">10</span> BUSD
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-3 col-md-6 mb-3">
-            <div className="card bg-primary text-light">
-              <div className="card-body text-center">
-                <h5 className="card-title">Current Deposit</h5>
-                <p className="card-text py-3">
-                  <span className="h4">10</span> BUSD
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-3 col-md-6 mb-3">
-            <div className="card bg-primary text-light">
-              <div className="card-body text-center">
-                <h5 className="card-title">Current Deposit</h5>
-                <p className="card-text py-3">
-                  <span className="h4">10</span> BUSD
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <UserDetailsContainer />
     </>
   );
 }
