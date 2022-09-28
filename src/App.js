@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Nav from "./components/Nav";
 import WalletModal from "./components/WalletModal";
 import UserDetailsContainer from "./components/UserDetailsContainer";
+import MinerContainer from "./components/MinerContainer";
 
 import { ethers } from "ethers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
@@ -80,6 +81,7 @@ function App() {
         />
       )}
       <UserDetailsContainer />
+      <MinerContainer/>
     </>
   );
 }
