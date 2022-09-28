@@ -142,3 +142,6 @@ button{
   background-color: #400d90 !important;
   /* background-color: #400d90 !important; */
 }
+.br-12{
+  border-radius: 25px;
+}
