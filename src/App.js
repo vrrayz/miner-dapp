@@ -30,7 +30,7 @@ function App() {
           throw new Error("Error Connecting to wallet");
         });
     } else {
-      console.log("clicked")
+      console.log("clicked");
       setWallet(optionSelected);
       setProvider(new ethers.providers.Web3Provider(window.ethereum));
     }
@@ -40,12 +40,13 @@ function App() {
       if (wallet === "Metamask") {
         try {
           await provider
-          .send("eth_requestAccounts", []).then(() => setSigner(provider.getSigner()))
+            .send("eth_requestAccounts", [])
+            .then(() => setSigner(provider.getSigner()));
         } catch (error) {
-          setWallet("")
+          setWallet("");
         }
-      }else{
-        setSigner(provider.getSigner())
+      } else {
+        setSigner(provider.getSigner());
       }
     }
   };
@@ -77,6 +78,50 @@ function App() {
           connectDapp={connectDapp}
         />
       )}
+      <div className="container mt-5 px-3" style={{ height: "100px" }}>
+        <div className="row">
+          <div className="col-lg-3 col-md-6 mb-3">
+            <div className="card bg-primary text-light">
+              <div className="card-body text-center">
+                <h5 className="card-title">Current Deposit</h5>
+                <p className="card-text py-3">
+                  <span className="h4">10</span> BUSD
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-3 col-md-6 mb-3">
+            <div className="card bg-primary text-light">
+              <div className="card-body text-center">
+                <h5 className="card-title">Current Deposit</h5>
+                <p className="card-text py-3">
+                  <span className="h4">10</span> BUSD
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-3 col-md-6 mb-3">
+            <div className="card bg-primary text-light">
+              <div className="card-body text-center">
+                <h5 className="card-title">Current Deposit</h5>
+                <p className="card-text py-3">
+                  <span className="h4">10</span> BUSD
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-3 col-md-6 mb-3">
+            <div className="card bg-primary text-light">
+              <div className="card-body text-center">
+                <h5 className="card-title">Current Deposit</h5>
+                <p className="card-text py-3">
+                  <span className="h4">10</span> BUSD
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

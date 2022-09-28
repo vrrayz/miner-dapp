@@ -1,20 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+:root{
+  --base-col: 12;
+}
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;700;800&display=swap');
 body {
   background-color: #f1f1f1;
   margin: 0;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Sora', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 button{
-  font-family: 'Orbitron', sans-serif;
-}
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: 'Sora', sans-serif;
 }
 .custom-nav{
-  background-color: #000d2f;
+  background-color: #400d90;
   padding: 0px 16px;
   display: flex;
   justify-content: space-between;
@@ -24,19 +23,19 @@ code {
   margin: 0px 8px;
   padding: 16px 0px;
   font-weight: 700;
-  color: #07b7da;
+  color: #fff;
 }
 .custom-nav .nav-btn{
   margin: auto 0px;
 }
 .btn{
   padding: 6px 14px;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Sora', sans-serif;
   font-weight: 600;
   border-radius: 8px;
   outline: none;
   border:none;
-  background-color: #07b7da;
+  background-color: #fabc16;
 }
 .modal-overlay{
   background-color: rgba(0, 17, 51, 0.9);
@@ -53,7 +52,7 @@ code {
   width: 300px;
   height: 300px;
   margin: auto;
-  background-color: #000d2f;
+  background-color: #400d90;
   border-radius: 12px;
   display: flex;
     flex-direction: column;
@@ -62,14 +61,24 @@ code {
   display: flex;
   justify-content: space-between;
   padding: 0px 12px;
-  background-color: #00247e;
+  background-color: #36087f;
   color: #fff;
   border-top-right-radius: 12px;
   border-top-left-radius: 12px;
 }
+.modal-title h3{
+  line-height: unset;
+  margin-top: revert;
+  margin-bottom: revert;
+  font-weight: revert;
+  font-size: revert;
+}
+.modal-box .row>*{
+  padding-left:revert;
+}
 .modal-close{
   margin: auto 0px;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Sora', sans-serif;
   color: #fff;
   background: transparent;
   outline: none;
@@ -102,9 +111,18 @@ code {
   display: flex;
   flex-wrap: wrap;
 }
-.col-6{
-  width: 50%;
+/* .col-1{
+  width: calc(100% /(var(--base-col) / 1));
 }
+.col-2{
+  width: calc(100% /(var(--base-col) / 2));
+}
+.col-3{
+  width: calc(100% /(var(--base-col) / 2));
+}
+.col-6{
+  width: calc(100% /(var(--base-col) / 6));
+} */
 .d-flex{
   display: flex;
 }
@@ -119,4 +137,8 @@ code {
 }
 .mb-3{
   margin-bottom: 24px;
+}
+.bg-primary{
+  background-color: #400d90 !important;
+  /* background-color: #400d90 !important; */
 }
