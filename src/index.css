@@ -46,7 +46,7 @@ button{
   top: 0;
   width: 100vw;
   height: 100vh;
-  /* z-index: 10000000000000000000000000000000000000; */
+  z-index: 10000000000000000000000000000000000000;
 }
 .modal-box{
   width: 300px;
@@ -144,4 +144,7 @@ button{
 }
 .br-12{
   border-radius: 25px;
+}
+.list-group-item{
+  border-radius: 0px !important;
 }
