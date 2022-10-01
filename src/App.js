@@ -10,7 +10,7 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 
 import { walletConnectRpc } from "./data/rpc";
 import { walletOptions } from "./data/walletOptions";
-import { minerCA, minerABI } from "./data/contractAbi";
+import { minerCA, minerABI, stablesABI, stablesCA, mainTokenABI, mainTokenCA } from "./data/contractAbi";
 
 function App() {
   const [isConnected, setIsConnected] = useState(false);
@@ -21,6 +21,8 @@ function App() {
   const [wallet, setWallet] = useState("");
   const [userInfo, setUserInfo] = useState("");
   const [minerContract, setMinerContract] = useState("");
+  const [stablesContract, setStablesContract] = useState("");
+  const [mainTokenContract, setMainTokenContract] = useState("");
 
   const connectDapp = async (optionSelected) => {
     const wcProvider = new WalletConnectProvider(walletConnectRpc);
@@ -63,6 +65,8 @@ function App() {
     // console.log("This is the " + provider);
     if (provider != "") {
       setMinerContract(new ethers.Contract(minerCA, minerABI, provider));
+      setMainTokenContract(new ethers.Contract(mainTokenCA, mainTokenABI, provider));
+      setStablesContract(new ethers.Contract(stablesCA, stablesABI, provider));
     }
     walletRequest();
   }, [provider, wallet]);
@@ -97,7 +101,7 @@ function App() {
         />
       )}
       <UserDetailsContainer userInfo={userInfo} />
-      <MinerContainer isConnected={isConnected} />
+      <MinerContainer isConnected={isConnected} stablesContract={stablesContract} />
     </>
   );
 }
