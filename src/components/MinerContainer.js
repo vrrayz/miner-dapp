@@ -3,12 +3,12 @@ import Row from "./Row";
 import MinerInputs from "./MinerInputs";
 import MinerDetails from "./MinerDetails";
 
-const MinerContainer = () => {
+const MinerContainer = ({isConnected}) => {
   return (
     <div className="container mt-5 px-3">
       <Row>
-        <MinerInputs />
-        <MinerDetails />
+        <MinerInputs isConnected={isConnected} />
+        <MinerDetails isConnected={isConnected} />
       </Row>
     </div>
   );

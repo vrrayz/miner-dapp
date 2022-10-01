@@ -1,6 +1,6 @@
 import React from "react";
 
-const ApproveForm = ({labelInfo, labelValue, labelUnit, inputId, buttonInfo}) => {
+const ApproveForm = ({labelInfo, labelValue, labelUnit, inputId, buttonInfo, buttonDisable}) => {
   return (
     <div className="mb-5">
       <label
@@ -16,7 +16,7 @@ const ApproveForm = ({labelInfo, labelValue, labelUnit, inputId, buttonInfo}) =>
         id={inputId}
         placeholder="0.00"
       />
-      <button className="btn fw-light px-3 px-md-5">{buttonInfo}</button>
+      <button className="btn fw-light px-3 px-md-5" disabled={buttonDisable && 'disabled'}>{buttonInfo}</button>
     </div>
   );
 };

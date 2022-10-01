@@ -1,6 +1,6 @@
 import React from "react";
 
-const MinerDetails = () => {
+const MinerDetails = ({isConnected}) => {
   return (
     <div className="col-md-9 col-lg-6 mx-auto">
       <div className="card bg-primary text-light">
@@ -15,7 +15,7 @@ const MinerDetails = () => {
               <br />
               <span className="small">00h : 00min : 00sec</span>
             </p>
-            <button className="btn fw-light">Claim and Restart</button>
+            <button className="btn fw-light" disabled={isConnected ? '': 'disabled'}>Claim and Restart</button>
             <hr />
           </div>
           <div className="list-group">

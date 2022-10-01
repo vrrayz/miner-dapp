@@ -10,6 +10,7 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 
 import { walletConnectRpc } from "./data/rpc";
 import { walletOptions } from "./data/walletOptions";
+import { minerCA, minerABI } from "./data/contractAbi";
 
 function App() {
   const [isConnected, setIsConnected] = useState(false);
@@ -18,6 +19,8 @@ function App() {
   const [provider, setProvider] = useState("");
   const [signer, setSigner] = useState("");
   const [wallet, setWallet] = useState("");
+  const [userInfo, setUserInfo] = useState("");
+  const [minerContract, setMinerContract] = useState("");
 
   const connectDapp = async (optionSelected) => {
     const wcProvider = new WalletConnectProvider(walletConnectRpc);
@@ -52,7 +55,15 @@ function App() {
       }
     }
   };
+  const fetchAndSetUser = async () => {
+    const user = await minerContract.user(userAddress);
+    setUserInfo(user);
+  };
   useEffect(() => {
+    // console.log("This is the " + provider);
+    if (provider != "") {
+      setMinerContract(new ethers.Contract(minerCA, minerABI, provider));
+    }
     walletRequest();
   }, [provider, wallet]);
   useEffect(() => {
@@ -64,6 +75,11 @@ function App() {
       });
     }
   }, [signer]);
+  useEffect(() => {
+    if(userAddress != ""){
+      fetchAndSetUser()
+    }
+  }, [userAddress])
   return (
     <>
       <Nav
@@ -80,8 +96,8 @@ function App() {
           connectDapp={connectDapp}
         />
       )}
-      <UserDetailsContainer />
-      <MinerContainer/>
+      <UserDetailsContainer userInfo={userInfo} />
+      <MinerContainer isConnected={isConnected} />
     </>
   );
 }

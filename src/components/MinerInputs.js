@@ -2,7 +2,7 @@ import React from 'react'
 import MinerForm from "./MinerForm";
 
 
-const MinerInputs = () => {
+const MinerInputs = ({isConnected}) => {
   return (
     <div className="col-md-9 col-lg-6 mx-auto mb-3">
           <div className="card bg-primary text-light rounded shadow">
@@ -15,6 +15,7 @@ const MinerInputs = () => {
                   labelUnit="BUSD"
                   inputId="approveInput"
                   buttonInfo="Approve"
+                  buttonDisable={isConnected ? false:true}
                 />
                 <MinerForm
                   labelInfo="Total deposit"
@@ -22,6 +23,7 @@ const MinerInputs = () => {
                   labelUnit="BUSD"
                   inputId="depositInput"
                   buttonInfo="Deposit"
+                  buttonDisable={isConnected ? false:true}
                 />
                 <MinerForm
                   labelInfo="Balance"
@@ -29,6 +31,7 @@ const MinerInputs = () => {
                   labelUnit="BUSD"
                   inputId="withdrawInput"
                   buttonInfo="Withdraw"
+                  buttonDisable={isConnected ? false:true}
                 />
               </div>
             </div>
