@@ -5,7 +5,7 @@ import WalletModal from "./components/WalletModal";
 import UserDetailsContainer from "./components/UserDetailsContainer";
 import MinerContainer from "./components/MinerContainer";
 
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 
 import { walletConnectRpc } from "./data/rpc";
@@ -23,6 +23,7 @@ function App() {
   const [minerContract, setMinerContract] = useState("");
   const [stablesContract, setStablesContract] = useState("");
   const [mainTokenContract, setMainTokenContract] = useState("");
+  const decimals = BigNumber.from(10).pow(18)
 
   const connectDapp = async (optionSelected) => {
     const wcProvider = new WalletConnectProvider(walletConnectRpc);
@@ -101,7 +102,7 @@ function App() {
         />
       )}
       <UserDetailsContainer userInfo={userInfo} />
-      <MinerContainer isConnected={isConnected} stablesContract={stablesContract} />
+      <MinerContainer decimals={decimals} isConnected={isConnected} stablesContract={stablesContract} userAddress={userAddress} userInfo={userInfo} />
     </>
   );
 }
