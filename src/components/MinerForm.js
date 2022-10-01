@@ -1,6 +1,6 @@
 import React from "react";
 
-const ApproveForm = ({labelInfo, labelValue, labelUnit, inputId, buttonInfo, buttonDisable}) => {
+const MinerForm = ({labelInfo, labelValue, labelUnit, inputId, buttonInfo, buttonDisable, approveStables}) => {
   return (
     <div className="mb-5">
       <label
@@ -21,4 +21,4 @@ const ApproveForm = ({labelInfo, labelValue, labelUnit, inputId, buttonInfo, but
   );
 };
 
-export default ApproveForm;
+export default MinerForm;
