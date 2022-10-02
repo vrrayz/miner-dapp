@@ -10,7 +10,14 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 
 import { walletConnectRpc } from "./data/rpc";
 import { walletOptions } from "./data/walletOptions";
-import { minerCA, minerABI, stablesABI, stablesCA, mainTokenABI, mainTokenCA } from "./data/contractAbi";
+import {
+  minerCA,
+  minerABI,
+  stablesABI,
+  stablesCA,
+  mainTokenABI,
+  mainTokenCA,
+} from "./data/contractAbi";
 
 function App() {
   const [isConnected, setIsConnected] = useState(false);
@@ -23,7 +30,7 @@ function App() {
   const [minerContract, setMinerContract] = useState("");
   const [stablesContract, setStablesContract] = useState("");
   const [mainTokenContract, setMainTokenContract] = useState("");
-  const decimals = BigNumber.from(10).pow(18)
+  const decimals = BigNumber.from(10).pow(18);
 
   const connectDapp = async (optionSelected) => {
     const wcProvider = new WalletConnectProvider(walletConnectRpc);
@@ -59,6 +66,7 @@ function App() {
     }
   };
   const fetchAndSetUser = async () => {
+    console.log("Called from here")
     const user = await minerContract.user(userAddress);
     setUserInfo(user);
   };
@@ -77,17 +85,19 @@ function App() {
         setUserAddress(res);
         setIsModalToggled(!isModalToggled);
         setMinerContract(new ethers.Contract(minerCA, minerABI, signer));
-      setMainTokenContract(new ethers.Contract(mainTokenCA, mainTokenABI, signer));
-      setStablesContract(new ethers.Contract(stablesCA, stablesABI, signer));
+        setMainTokenContract(
+          new ethers.Contract(mainTokenCA, mainTokenABI, signer)
+        );
+        setStablesContract(new ethers.Contract(stablesCA, stablesABI, signer));
         setIsConnected(true);
       });
     }
   }, [signer]);
   useEffect(() => {
-    if(userAddress != ""){
-      fetchAndSetUser()
+    if (userAddress != "") {
+      fetchAndSetUser();
     }
-  }, [userAddress])
+  }, [userAddress]);
   return (
     <>
       <Nav
@@ -105,7 +115,15 @@ function App() {
         />
       )}
       <UserDetailsContainer userInfo={userInfo} />
-      <MinerContainer decimals={decimals} isConnected={isConnected} stablesContract={stablesContract} userAddress={userAddress} userInfo={userInfo} />
+      <MinerContainer
+        decimals={decimals}
+        isConnected={isConnected}
+        stablesContract={stablesContract}
+        userAddress={userAddress}
+        fetchAndSetUser = {fetchAndSetUser}
+        userInfo={userInfo}
+        minerContract={minerContract}
+      />
     </>
   );
 }

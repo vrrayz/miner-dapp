@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import { minerCA } from "../data/contractAbi";
 import MinerForm from "./MinerForm";
 
-const MinerInputs = ({ isConnected, stablesContract, userAddress,decimals, userInfo }) => {
+const MinerInputs = ({ isConnected, stablesContract, userAddress,decimals, userInfo, minerContract, fetchAndSetUser }) => {
   const [stablesBalance, setStablesBalance] = useState(0);
   const [approvedBalance, setApprovedBalance] = useState(0);
+  const zeroAddress = "0x0000000000000000000000000000000000000000"
   let {totalDeposit} = userInfo
   totalDeposit = totalDeposit ? totalDeposit.div(decimals).toNumber() : 0
   const getUserStablesBalance = async () => {
@@ -17,13 +18,30 @@ const MinerInputs = ({ isConnected, stablesContract, userAddress,decimals, userI
   };
   const approveStables = async (amount) => {
     const nAmount = BigNumber.from(amount).mul(decimals).toString();
-    // console.log(nAmount)
     await stablesContract.approve(minerCA,nAmount)
     approvalListener(nAmount)
   }
+  const getReferral =() => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    return urlParams.get("ref");
+  }
+  const depositStables = async (amount) => {
+    const nAmount = BigNumber.from(amount).mul(decimals).toString()
+    let {referral} = userInfo
+    if(totalDeposit === 0){
+        referral = getReferral() ? getReferral() : zeroAddress
+    }
+    await minerContract.deposit(nAmount,referral)
+    depositStablesListener(nAmount)
+  }
+  const depositStablesListener = (amount) => {
+    stablesContract.on("Transfer", (userAddress,minerCA,amount) => {
+        fetchAndSetUser()
+    })
+  }
   const approvalListener = (amount) => {
     stablesContract.on("Approval", (userAddress,minerCA,amount) => {
-        // console.log(userAddress)
         getUserStablesBalance()
     })
   }
@@ -53,6 +71,7 @@ const MinerInputs = ({ isConnected, stablesContract, userAddress,decimals, userI
               labelUnit="BUSD"
               inputId="depositInput"
               buttonInfo="Deposit"
+              depositStables = {depositStables}
               buttonDisable={isConnected ? false : true}
             />
             <MinerForm
