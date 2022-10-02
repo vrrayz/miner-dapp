@@ -10,6 +10,7 @@ const MinerForm = ({
   buttonDisable,
   approveStables,
   depositStables,
+  withdraw
 }) => {
   const [value, setValue] = useState(0);
   const storeValue = (e) => {
@@ -21,6 +22,9 @@ const MinerForm = ({
     }
     if(depositStables){
       depositStables(value);
+    }
+    if(withdraw){
+      withdraw(value);
     }
   };
   return (

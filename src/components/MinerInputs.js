@@ -36,8 +36,18 @@ const MinerInputs = ({ isConnected, stablesContract, userAddress,decimals, userI
     await minerContract.deposit(nAmount,referral)
     depositStablesListener(nAmount)
   }
+  const withdraw = async (amount) => {
+    const nAmount = BigNumber.from(amount).mul(decimals).toString()
+    await minerContract.withdraw(nAmount)
+    withdrawListener(nAmount)
+  }
   const depositStablesListener = (amount) => {
     stablesContract.on("Transfer", (userAddress,minerCA,amount) => {
+        fetchAndSetUser()
+    })
+  }
+  const withdrawListener = (amount) => {
+    stablesContract.on("Transfer", (minerCA,userAddress,amount) => {
         fetchAndSetUser()
     })
   }
@@ -81,6 +91,7 @@ const MinerInputs = ({ isConnected, stablesContract, userAddress,decimals, userI
               labelUnit="BUSD"
               inputId="withdrawInput"
               buttonInfo="Withdraw"
+              withdraw = {withdraw}
               buttonDisable={isConnected ? false : true}
             />
           </div>
