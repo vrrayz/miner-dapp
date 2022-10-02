@@ -1,3 +1,4 @@
+import { BigNumber } from "ethers";
 import React from "react";
 import { useEffect, useState } from "react";
 import { minerCA } from "../data/contractAbi";
@@ -14,6 +15,18 @@ const MinerInputs = ({ isConnected, stablesContract, userAddress,decimals, userI
     setStablesBalance(balance.div(decimals).toNumber())
     setApprovedBalance(approved.div(decimals).toNumber())
   };
+  const approveStables = async (amount) => {
+    const nAmount = BigNumber.from(amount).mul(decimals).toString();
+    // console.log(nAmount)
+    await stablesContract.approve(minerCA,nAmount)
+    approvalListener(nAmount)
+  }
+  const approvalListener = (amount) => {
+    stablesContract.on("Approval", (userAddress,minerCA,amount) => {
+        // console.log(userAddress)
+        getUserStablesBalance()
+    })
+  }
   useEffect(() => {
     if (isConnected) {
       getUserStablesBalance();
@@ -31,6 +44,7 @@ const MinerInputs = ({ isConnected, stablesContract, userAddress,decimals, userI
               labelUnit="BUSD"
               inputId="approveInput"
               buttonInfo="Approve"
+              approveStables = {approveStables}
               buttonDisable={isConnected ? false : true}
             />
             <MinerForm
