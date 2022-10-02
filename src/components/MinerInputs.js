@@ -10,6 +10,11 @@ const MinerInputs = ({ isConnected, stablesContract, userAddress,decimals, userI
   const zeroAddress = "0x0000000000000000000000000000000000000000"
   let {totalDeposit} = userInfo
   totalDeposit = totalDeposit ? totalDeposit.div(decimals).toNumber() : 0
+  const getReferral =() => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    return urlParams.get("ref");
+  }
   const getUserStablesBalance = async () => {
     const balance = await stablesContract.balanceOf(userAddress);
     const approved = await stablesContract.allowance(userAddress,minerCA)
@@ -21,11 +26,7 @@ const MinerInputs = ({ isConnected, stablesContract, userAddress,decimals, userI
     await stablesContract.approve(minerCA,nAmount)
     approvalListener(nAmount)
   }
-  const getReferral =() => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    return urlParams.get("ref");
-  }
+  
   const depositStables = async (amount) => {
     const nAmount = BigNumber.from(amount).mul(decimals).toString()
     let {referral} = userInfo
