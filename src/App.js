@@ -64,11 +64,11 @@ function App() {
   };
   useEffect(() => {
     // console.log("This is the " + provider);
-    if (provider != "") {
-      setMinerContract(new ethers.Contract(minerCA, minerABI, provider));
-      setMainTokenContract(new ethers.Contract(mainTokenCA, mainTokenABI, provider));
-      setStablesContract(new ethers.Contract(stablesCA, stablesABI, provider));
-    }
+    // if (provider != "") {
+    //   setMinerContract(new ethers.Contract(minerCA, minerABI, provider));
+    //   setMainTokenContract(new ethers.Contract(mainTokenCA, mainTokenABI, provider));
+    //   setStablesContract(new ethers.Contract(stablesCA, stablesABI, provider));
+    // }
     walletRequest();
   }, [provider, wallet]);
   useEffect(() => {
@@ -76,6 +76,9 @@ function App() {
       signer.getAddress().then((res) => {
         setUserAddress(res);
         setIsModalToggled(!isModalToggled);
+        setMinerContract(new ethers.Contract(minerCA, minerABI, signer));
+      setMainTokenContract(new ethers.Contract(mainTokenCA, mainTokenABI, signer));
+      setStablesContract(new ethers.Contract(stablesCA, stablesABI, signer));
         setIsConnected(true);
       });
     }
