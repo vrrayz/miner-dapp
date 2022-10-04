@@ -66,7 +66,6 @@ function App() {
     }
   };
   const fetchAndSetUser = async () => {
-    console.log("Called from here")
     const user = await minerContract.user(userAddress);
     setUserInfo(user);
   };
