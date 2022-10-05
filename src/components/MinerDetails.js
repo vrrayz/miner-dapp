@@ -58,7 +58,8 @@ const MinerDetails = ({
   }, [mineDuration, dateDiff, miningPower]);
   useEffect(()=>{
     if(mineDuration){
-      setInterval(() => {
+     
+      setTimeout(() => {
         if (dateDiff < mineDuration) {
           const seconds = Math.floor(dateDiff % 60);
           const minutes = Math.floor((dateDiff / 60) % 60);
@@ -68,7 +69,7 @@ const MinerDetails = ({
         }else{
           setTimeFormat("00h : 00min : 00sec")
         }        
-      },2000);
+      },1000);
     }
   },[mineDuration,dateDiff])
   useEffect(() => {
