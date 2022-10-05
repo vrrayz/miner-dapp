@@ -59,16 +59,15 @@ const MinerDetails = ({
   useEffect(()=>{
     if(mineDuration){
       setInterval(() => {
-        setTimeFormat((prev) => {
-          if (dateDiff < mineDuration) {
-            const seconds = Math.floor(dateDiff % 60);
-            const minutes = Math.floor((dateDiff / 60) % 60);
-            const hours = Math.floor((dateDiff / 3600) % 60);
+        if (dateDiff < mineDuration) {
+          const seconds = Math.floor(dateDiff % 60);
+          const minutes = Math.floor((dateDiff / 60) % 60);
+          const hours = Math.floor((dateDiff / 3600) % 60);
 
-            return `${hours}h : ${minutes}min : ${seconds}sec`;
-          }
-          return "00h : 00min : 00sec";
-        });
+          setTimeFormat(`${hours}h : ${minutes}min : ${seconds}sec`);
+        }else{
+          setTimeFormat("00h : 00min : 00sec")
+        }        
       },2000);
     }
   },[mineDuration,dateDiff])
