@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
 
-const MinerDetails = ({ isConnected, userInfo, minerContract, decimals }) => {
+const MinerDetails = ({
+  isConnected,
+  userInfo,
+  minerContract,
+  decimals,
+  fetchAndSetUser,
+}) => {
   const [mineDuration, setMineDuration] = useState(0);
   const [isReadyToClaim, setIsReadyToClaim] = useState(false);
   const [currentMined, setCurrentMined] = useState(0);
+  const [timeFormat, setTimeFormat] = useState("00h : 00min : 00sec");
   const minerTokenRate = 13; //13 percent minertoken rate
 
   let { miners, totalTokensMined, compoundCount, lastCompoundTime } = userInfo;
@@ -18,12 +25,21 @@ const MinerDetails = ({ isConnected, userInfo, minerContract, decimals }) => {
   const time = new Date().getTime() / 1000; // converting to epoch
   const dateDiff = time - lastCompoundTime;
 
-  const mineToken = async() => {
-    await minerContract.mineTokens().then(res => console.log(res)).catch(err => console.log(err))
-  }
+  const mineToken = async () => {
+    await minerContract
+      .mineTokens()
+      .then((res) => console.log(res))
+      .catch((err) => {
+        console.log(err);
+        throw new Error(err);
+      })
+      .finally(() => {
+        fetchAndSetUser();
+      });
+  };
   const claimAndRestart = () => {
-    mineToken()
-  }
+    mineToken();
+  };
 
   useEffect(() => {
     if (isConnected) {
@@ -34,17 +50,33 @@ const MinerDetails = ({ isConnected, userInfo, minerContract, decimals }) => {
     const tokensPerSecond = miningPower / mineDuration;
     if (mineDuration) {
       setCurrentMined(
-        dateDiff > mineDuration
-          ? tokensPerSecond * mineDuration
-          : tokensPerSecond * dateDiff
+        dateDiff >= mineDuration
+          ? Number(tokensPerSecond * mineDuration).toFixed(2)
+          : Number(tokensPerSecond * dateDiff).toFixed(2)
       );
     }
-    // console.log("Hours since last claim and restart == "+ (dateDiff/mineDuration))
-    // console.log("Current unclaimed mines == "+ currentMined)
-  });
+  }, [mineDuration, dateDiff, miningPower]);
+  useEffect(()=>{
+    if(mineDuration){
+      setInterval(() => {
+        setTimeFormat((prev) => {
+          if (dateDiff < mineDuration) {
+            const seconds = Math.floor(dateDiff % 60);
+            const minutes = Math.floor((dateDiff / 60) % 60);
+            const hours = Math.floor((dateDiff / 3600) % 60);
+
+            return `${hours}h : ${minutes}min : ${seconds}sec`;
+          }
+          return "00h : 00min : 00sec";
+        });
+      },2000);
+    }
+  },[mineDuration,dateDiff])
   useEffect(() => {
     if (isConnected && dateDiff >= mineDuration) {
       setIsReadyToClaim(true);
+    } else {
+      setIsReadyToClaim(false);
     }
   }, [mineDuration, dateDiff, isConnected]);
   const getAndSetMineDuration = async () => {
@@ -64,11 +96,11 @@ const MinerDetails = ({ isConnected, userInfo, minerContract, decimals }) => {
             <p className="small">
               Mine until
               <br />
-              <span className="small">00h : 00min : 00sec</span>
+              <span className="small">{timeFormat}</span>
             </p>
             <button
               className="btn fw-light"
-              disabled={isReadyToClaim ? "" : "disabled"}
+              disabled={isReadyToClaim && currentMined !== 0 ? "" : "disabled"}
               onClick={claimAndRestart}
             >
               Claim and Restart

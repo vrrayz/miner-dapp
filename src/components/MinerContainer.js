@@ -29,6 +29,7 @@ const MinerContainer = ({
           isConnected={isConnected}
           userInfo={userInfo}
           minerContract={minerContract}
+          fetchAndSetUser={fetchAndSetUser}
         />
       </Row>
     </div>
